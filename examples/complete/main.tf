@@ -7,6 +7,9 @@ locals {
   region = "us-east-2"
 }
 
+################################################################################
+## VPC                                                                        ##
+################################################################################
 module "vpc" {
   source = "../../"
 
@@ -150,5 +153,90 @@ module "vpc" {
     "GithubRepo"  = "terraform-aws-vpc"
     "Owner"       = "bsakdol"
     "Terraform"   = "true"
+  }
+}
+
+################################################################################
+## VPC ENDPOINTS                                                              ##
+################################################################################
+module "vpc_endpoints" {
+  source = "../../modules/vpc-endpoints"
+
+  vpc_id = module.vpc.id
+
+  endpoint_defaults = {
+    private_dns_enabled = true
+    route_table_ids     = [for k, v in module.vpc.route_tables.private : v.id]
+    security_group_ids  = [data.aws_security_group.default.id]
+    subnet_ids          = [for k, v in module.vpc.subnets.private : v.id]
+
+    timeouts = {
+      create = "10m"
+      update = "10m"
+      delete = "10m"
+    }
+  }
+
+  endpoints = {
+    codedeploy = {
+      vpc_endpoint_type = "Interface"
+    },
+    dynamodb = {
+      vpc_endpoint_type = "Gateway"
+      policy            = data.aws_iam_policy_document.dynamodb_endpoint_policy.json
+    },
+    ecs = {
+      vpc_endpoint_type = "Interface"
+    },
+    ecs-telemetry = {
+      vpc_endpoint_type = "Interface"
+    },
+    lambda = {
+      vpc_endpoint_type = "Interface"
+    },
+    s3 = {
+      vpc_endpoint_type = "Gateway"
+    },
+  }
+
+  tags = {
+    "Environment" = "development"
+    "GithubRepo"  = "terraform-aws-vpc"
+    "Owner"       = "bsakdol"
+    "Terraform"   = "true"
+  }
+}
+
+################################################################################
+## DEPENDENCIES                                                               ##
+################################################################################
+
+data "aws_security_group" "default" {
+  name   = "default"
+  vpc_id = module.vpc.id
+}
+
+data "aws_iam_policy_document" "dynamodb_endpoint_policy" {
+  statement {
+    actions = [
+      "dynamodb:*",
+    ]
+
+    effect = "Deny"
+
+    resources = [
+      "*"
+    ]
+
+    condition {
+      test     = "StringNotEquals"
+      values   = [module.vpc.id]
+      variable = "aws:sourceVpce"
+    }
+
+    principals {
+      identifiers = ["*"]
+      type        = "*"
+    }
   }
 }

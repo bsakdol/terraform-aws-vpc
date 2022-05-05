@@ -50,9 +50,9 @@ This module supports different subnet types to provide different methods of conn
 
 - **Internal Subnet:** No internet connectivity to resources created within an internal subnet.
 - **Private Subnet:** Internet connectivity is provided through the NAT Gateway.
-- **Public Subnet:** Internet connectivity is provided through the Internet Gateway. This is accomplished by mapping public IP addresses to instances, by default, on instance launch. *It is important to remember, instances in a public subnet are directly accessible from the internet. Ensure proper security measures have been taken to mitigate security risks on instances in public subnets.*
+- **Public Subnet:** Internet connectivity is provided through the Internet Gateway. This is accomplished by mapping public IP addresses to instances, by default, on instance launch. _It is important to remember, instances in a public subnet are directly accessible from the internet. Ensure proper security measures have been taken to mitigate security risks on instances in public subnets._
 
-*NOTE: When provisioning a private subnet, public subnets are also required in order to facilitate provisioning of the NAT Gateway(s). Please see [NAT Gateways](#nat-gateway) for more details.*
+_NOTE: When provisioning a private subnet, public subnets are also required in order to facilitate provisioning of the NAT Gateway(s). Please see [NAT Gateways](#nat-gateway) for more details._
 
 ## NAT Gateway
 
@@ -66,6 +66,10 @@ This module is responsible for managing the NACLs for each of the provisioned su
 
 By default, when an NACL is provisioned a single rule is implemented to permit all traffic inbound and all traffic outbound. For an example of how to customize the Network ACL rules, please refer to the [complete](examples/complete/) example. For more in-depth information on the available options, please refer to the Terraform documentation for the [network-acl](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_acl) resource.
 
+## VPC Endpoints
+
+`Interface` and/or `Gateway` VPC Endpoints are managed via a sub-module. This provides the flexibility to manage VPC endpoints independently of the VPC, and resources dependant on the VPC. For more information, please reference the [README.md](modules/vpc-endpoints/README.md) for the sub-module.
+
 ## Examples
 
 - [Complete](examples/complete/)
@@ -77,13 +81,13 @@ By default, when an NACL is provisioned a single rule is implemented to permit a
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.1 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.60.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.8 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.60.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.8 |
 
 ## Modules
 

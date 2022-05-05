@@ -7,6 +7,9 @@ locals {
   region = "us-east-2"
 }
 
+################################################################################
+## VPC                                                                        ##
+################################################################################
 module "vpc" {
   source = "../../"
 
@@ -41,5 +44,28 @@ module "vpc" {
     GithubRepo  = "terraform-aws-vpc"
     Owner       = "bsakdol"
     Terraform   = "true"
+  }
+}
+
+################################################################################
+## VPC ENDPOINTS                                                              ##
+################################################################################
+module "vpc_endpoints" {
+  source = "../../modules/vpc-endpoints"
+
+  vpc_id = module.vpc.id
+
+  endpoints = {
+    s3 = {
+      route_table_ids   = [for k, v in module.vpc.route_tables.private : v.id]
+      vpc_endpoint_type = "Gateway"
+    },
+  }
+
+  tags = {
+    "Environment" = "development"
+    "GithubRepo"  = "terraform-aws-vpc"
+    "Owner"       = "bsakdol"
+    "Terraform"   = "true"
   }
 }

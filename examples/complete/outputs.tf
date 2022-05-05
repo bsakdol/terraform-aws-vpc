@@ -139,3 +139,11 @@ output "vpc_tags_all" {
   EOT
   value       = module.vpc.tags_all
 }
+
+################################################################################
+## VPC ENDPOINTS                                                              ##
+################################################################################
+output "vpc_endpoints_all" {
+  description = "A map of VPC endpoints attributes."
+  value       = module.vpc_endpoints.vpc_endpoints_all
+}

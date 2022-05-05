@@ -27,7 +27,7 @@ terraform destroy
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.1 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.60.0, < 4.0.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.8 |
 
 ## Providers
 
@@ -38,6 +38,7 @@ No providers.
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_vpc"></a> [vpc](#module\_vpc) | ../../ | n/a |
+| <a name="module_vpc_endpoints"></a> [vpc\_endpoints](#module\_vpc\_endpoints) | ../../modules/vpc-endpoints | n/a |
 
 ## Resources
 
