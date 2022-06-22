@@ -45,9 +45,9 @@ output "prefix_list_ids" {
   value       = try(aws_vpc_endpoint.this[*].prefix_list_id)
 }
 
-output "requester_managed" {
+output "requestor_managed" {
   description = "Whether or not the VPC Endpoint is being managed by its service."
-  value       = try(aws_vpc_endpoint.this[*].requester_managed)
+  value       = try(aws_vpc_endpoint.this[*].requestor_managed)
 }
 
 output "states" {

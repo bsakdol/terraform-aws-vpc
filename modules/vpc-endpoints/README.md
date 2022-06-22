@@ -88,7 +88,7 @@ No modules.
 | <a name="output_network_interface_ids"></a> [network\_interface\_ids](#output\_network\_interface\_ids) | One or more network interfaces for the VPC Endpoints. Applicable for<br>endpoints of type Interface. |
 | <a name="output_owner_ids"></a> [owner\_ids](#output\_owner\_ids) | The ID of the AWS account that owns the VPC endpoints. |
 | <a name="output_prefix_list_ids"></a> [prefix\_list\_ids](#output\_prefix\_list\_ids) | The prefix list ID of the exposed AWS service. Applicable for endpoints of<br>type Gateway. |
-| <a name="output_requester_managed"></a> [requester\_managed](#output\_requester\_managed) | Whether or not the VPC Endpoint is being managed by its service. |
+| <a name="output_requestor_managed"></a> [requestor\_managed](#output\_requestor\_managed) | Whether or not the VPC Endpoint is being managed by its service. |
 | <a name="output_states"></a> [states](#output\_states) | The state of the VPC endpoint. |
 | <a name="output_tags_all"></a> [tags\_all](#output\_tags\_all) | A map of tags assigned to the VPC Endpoints, including those inherited from<br>the provider `default_tags` configuration block. |
 | <a name="output_vpc_endpoints_all"></a> [vpc\_endpoints\_all](#output\_vpc\_endpoints\_all) | A map of VPC endpoints attributes. |
