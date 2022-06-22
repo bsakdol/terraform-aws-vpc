@@ -113,7 +113,7 @@ variable "nat_gateway_tags" {
   type        = map(string)
   default     = {}
   description = <<-EOT
-    A map of tags to assign to the NAT Gateway resources. Resourcespecific tags
+    A map of tags to assign to the NAT Gateway resources. Resource specific tags
     will override all other tags.
   EOT
 }
