@@ -159,8 +159,9 @@ resource "aws_subnet" "public" {
 
   vpc_id = local.vpc_id
 
-  availability_zone = each.value.availability_zone
-  cidr_block        = each.key
+  availability_zone       = each.value.availability_zone
+  cidr_block              = each.key
+  map_public_ip_on_launch = true
 
   tags = merge(
     var.tags,
