@@ -6,9 +6,11 @@ This module makes use of maps, instead of lists, for many resources. This gives 
 
 ## Usage
 
+**IMPORTANT NOTE:** The `main` branch is used as the module source for the usage examples, in place of the version. It is important to pin the release tag (e.g. `?ref=tags/x.y.z`) for the module to the source, when using any portion of this module to provision resources. The `main` branch may contain undocumented breaking changes.
+
 ```hcl
 module "vpc" {
-  source = "https://github.com/bsakdol/terraform-aws-vpc"
+  source = "https://github.com/bsakdol/terraform-aws-vpc?ref=main"
 
   name = "example-vpc"
 
@@ -70,10 +72,16 @@ By default, when an NACL is provisioned a single rule is implemented to permit a
 
 `Interface` and/or `Gateway` VPC Endpoints are managed via a sub-module. This provides the flexibility to manage VPC endpoints independently of the VPC, and resources dependant on the VPC. For more information, please reference the [README.md](modules/vpc-endpoints/README.md) for the sub-module.
 
+## VPC Flow Logs
+
+A sub-module is included to manage VPC Flow Logs with a destination of CloudWatch or S3. This provides the flexibility to manage VPC Flow Logs independently of the VPC. For more information, please reference the [README.md](modules/vpc-flow-logs/README.md) for the sub-module.
+
 ## Examples
 
 - [Complete](examples/complete/)
 - [Simple](examples/simple/)
+- [VPC Flow Logs with CloudWatch](examples/vpc-flow-logs/)
+- [VPC Flow Logs with S3](examples/vpc-flow-logs-s3/)
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
