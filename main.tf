@@ -16,8 +16,8 @@ locals {
   # associated with the secondary CIDR blocks are deleted prior to Terraform
   # attempting to delete the secondary CIDR block.
   vpc_id = try(
-    element(aws_vpc_ipv4_cidr_block_association.this.*.vpc_id, 0),
-    element(aws_vpc.this.*.id, 0),
+    aws_vpc_ipv4_cidr_block_association.this[0].vpc_id,
+    aws_vpc.this[0].id,
     null
   )
 }
@@ -51,7 +51,7 @@ resource "aws_vpc_ipv4_cidr_block_association" "this" {
   for_each = var.manage_vpc && length(var.vpc_ipv4_cidr_block_associations) > 0 ? var.vpc_ipv4_cidr_block_associations : {}
 
   # This should not be `local.vpc_id` to avoid a circular reference
-  vpc_id = element(aws_vpc.this.*.id, 0)
+  vpc_id = aws_vpc.this[0].id
 
   cidr_block          = try(each.value.ipv4_cidr_block, null)
   ipv4_ipam_pool_id   = try(each.value.ipv4_ipam_pool_id, null)
@@ -87,7 +87,7 @@ resource "aws_vpc_dhcp_options" "this" {
 resource "aws_vpc_dhcp_options_association" "this" {
   count = var.manage_vpc && length(var.dhcp_options) > 0 ? 1 : 0
 
-  dhcp_options_id = element(aws_vpc_dhcp_options.this.*.id, 0)
+  dhcp_options_id = aws_vpc_dhcp_options.this[0].id
   vpc_id          = local.vpc_id
 }
 
@@ -109,7 +109,7 @@ resource "aws_internet_gateway" "this" {
 resource "aws_internet_gateway_attachment" "this" {
   count = var.manage_vpc && length(var.public_subnets) > 0 ? 1 : 0
 
-  internet_gateway_id = element(aws_internet_gateway.this.*.id, 0)
+  internet_gateway_id = aws_internet_gateway.this[0].id
   vpc_id              = local.vpc_id
 
 }
@@ -117,10 +117,10 @@ resource "aws_internet_gateway_attachment" "this" {
 resource "aws_route" "public_igw" {
   count = local.manage_public_subnets ? 1 : 0
 
-  route_table_id = element(aws_route_table.public.*.id, 0)
+  route_table_id = aws_route_table.public[0].id
 
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = element(aws_internet_gateway.this.*.id, 0)
+  gateway_id             = aws_internet_gateway.this[0].id
 }
 
 ################################################################################
@@ -229,7 +229,7 @@ resource "aws_route_table" "public" {
 resource "aws_route_table_association" "internal" {
   for_each = local.manage_internal_subnets ? var.internal_subnets : {}
 
-  route_table_id = element(aws_route_table.internal.*.id, 0)
+  route_table_id = aws_route_table.internal[0].id
 
   subnet_id = aws_subnet.internal[each.key].id
 }
@@ -245,7 +245,7 @@ resource "aws_route_table_association" "private" {
 resource "aws_route_table_association" "public" {
   for_each = local.manage_public_subnets ? var.public_subnets : {}
 
-  route_table_id = element(aws_route_table.public.*.id, 0)
+  route_table_id = aws_route_table.public[0].id
 
   subnet_id = aws_subnet.public[each.key].id
 }
@@ -354,7 +354,7 @@ resource "aws_network_acl" "public" {
 resource "aws_network_acl_rule" "internal_ingress" {
   for_each = { for k, v in var.network_acl_internal_ingress : k => v if local.manage_internal_subnets }
 
-  network_acl_id = element(aws_network_acl.internal.*.id, 0)
+  network_acl_id = aws_network_acl.internal[0].id
   protocol       = each.value.protocol
   rule_action    = each.value.rule_action
   rule_number    = each.key
@@ -370,7 +370,7 @@ resource "aws_network_acl_rule" "internal_ingress" {
 resource "aws_network_acl_rule" "internal_egress" {
   for_each = { for k, v in var.network_acl_internal_egress : k => v if local.manage_internal_subnets }
 
-  network_acl_id = element(aws_network_acl.internal.*.id, 0)
+  network_acl_id = aws_network_acl.internal[0].id
   protocol       = each.value.protocol
   rule_action    = each.value.rule_action
   rule_number    = each.key
@@ -386,7 +386,7 @@ resource "aws_network_acl_rule" "internal_egress" {
 resource "aws_network_acl_rule" "private_ingress" {
   for_each = { for k, v in var.network_acl_private_ingress : k => v if local.manage_private_subnets }
 
-  network_acl_id = element(aws_network_acl.private.*.id, 0)
+  network_acl_id = aws_network_acl.private[0].id
   protocol       = each.value.protocol
   rule_action    = each.value.rule_action
   rule_number    = each.key
@@ -402,7 +402,7 @@ resource "aws_network_acl_rule" "private_ingress" {
 resource "aws_network_acl_rule" "private_egress" {
   for_each = { for k, v in var.network_acl_private_egress : k => v if local.manage_private_subnets }
 
-  network_acl_id = element(aws_network_acl.private.*.id, 0)
+  network_acl_id = aws_network_acl.private[0].id
   protocol       = each.value.protocol
   rule_action    = each.value.rule_action
   rule_number    = each.key
@@ -418,7 +418,7 @@ resource "aws_network_acl_rule" "private_egress" {
 resource "aws_network_acl_rule" "public_ingress" {
   for_each = { for k, v in var.network_acl_public_ingress : k => v if local.manage_public_subnets }
 
-  network_acl_id = element(aws_network_acl.public.*.id, 0)
+  network_acl_id = aws_network_acl.public[0].id
   protocol       = each.value.protocol
   rule_action    = each.value.rule_action
   rule_number    = each.key
@@ -434,7 +434,7 @@ resource "aws_network_acl_rule" "public_ingress" {
 resource "aws_network_acl_rule" "public_egress" {
   for_each = { for k, v in var.network_acl_public_egress : k => v if local.manage_public_subnets }
 
-  network_acl_id = element(aws_network_acl.public.*.id, 0)
+  network_acl_id = aws_network_acl.public[0].id
   protocol       = each.value.protocol
   rule_action    = each.value.rule_action
   rule_number    = each.key
