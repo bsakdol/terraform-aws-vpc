@@ -97,8 +97,6 @@ resource "aws_vpc_dhcp_options_association" "this" {
 resource "aws_internet_gateway" "this" {
   count = var.manage_vpc && length(var.public_subnets) > 0 ? 1 : 0
 
-  vpc_id = local.vpc_id
-
   tags = merge(
     var.tags,
     {
@@ -106,6 +104,14 @@ resource "aws_internet_gateway" "this" {
     },
     var.igw_tags
   )
+}
+
+resource "aws_internet_gateway_attachment" "this" {
+  count = var.manage_vpc && length(var.public_subnets) > 0 ? 1 : 0
+
+  internet_gateway_id = element(aws_internet_gateway.this.*.id, 0)
+  vpc_id              = local.vpc_id
+
 }
 
 resource "aws_route" "public_igw" {
