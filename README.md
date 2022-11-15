@@ -107,6 +107,7 @@ No modules.
 |------|------|
 | [aws_eip.nat](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eip) | resource |
 | [aws_internet_gateway.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/internet_gateway) | resource |
+| [aws_internet_gateway_attachment.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/internet_gateway_attachment) | resource |
 | [aws_nat_gateway.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/nat_gateway) | resource |
 | [aws_network_acl.internal](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_acl) | resource |
 | [aws_network_acl.private](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_acl) | resource |
@@ -141,8 +142,6 @@ No modules.
 | <a name="input_dhcp_options"></a> [dhcp\_options](#input\_dhcp\_options) | A map of to manage the DHCP options attributes for the VPC. For information<br>about the arguments relevant for this resource type, see [Argument Reference](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_dhcp_options#argument-reference). | `any` | `{}` | no |
 | <a name="input_dhcp_options_tags"></a> [dhcp\_options\_tags](#input\_dhcp\_options\_tags) | A map of tags to assign to the DHCP options. Resource specific tags will<br>override all other tags. | `map(string)` | `{}` | no |
 | <a name="input_eip_nat_tags"></a> [eip\_nat\_tags](#input\_eip\_nat\_tags) | A map of tags to assign to the EIP resources for the NAT Gateways. Resource<br>specific tags will override all other tags. | `map(string)` | `{}` | no |
-| <a name="input_enable_classiclink"></a> [enable\_classiclink](#input\_enable\_classiclink) | A boolean flag to enable/disable ClassicLink for the VPC. | `bool` | `false` | no |
-| <a name="input_enable_classiclink_dns_support"></a> [enable\_classiclink\_dns\_support](#input\_enable\_classiclink\_dns\_support) | A boolean flag to enable/disable ClassicLink DNS Support for the VPC. | `bool` | `false` | no |
 | <a name="input_enable_dns_hostnames"></a> [enable\_dns\_hostnames](#input\_enable\_dns\_hostnames) | A boolean flag to enable/disable DNS hostnames in the VPC. | `bool` | `false` | no |
 | <a name="input_enable_dns_support"></a> [enable\_dns\_support](#input\_enable\_dns\_support) | A boolean flag to enable/disable DNS support in the VPC. | `bool` | `true` | no |
 | <a name="input_igw_tags"></a> [igw\_tags](#input\_igw\_tags) | A map of tags to assign to the internet gateway resource. Resource specific<br>tags will override all other tags. | `map(string)` | `{}` | no |
@@ -181,7 +180,6 @@ No modules.
 | <a name="output_default_route_table_id"></a> [default\_route\_table\_id](#output\_default\_route\_table\_id) | The ID of the route table created by default on VPC creation. |
 | <a name="output_default_security_group_id"></a> [default\_security\_group\_id](#output\_default\_security\_group\_id) | The ID of the security group created by default on VPC creation. |
 | <a name="output_dhcp_options"></a> [dhcp\_options](#output\_dhcp\_options) | A map of DHCP options and attributes. |
-| <a name="output_enable_classiclink"></a> [enable\_classiclink](#output\_enable\_classiclink) | Whether or not the VPC has Classiclink enabled. |
 | <a name="output_enable_dns_hostnames"></a> [enable\_dns\_hostnames](#output\_enable\_dns\_hostnames) | Whether or not the VPC has DNS hostname support. |
 | <a name="output_enable_dns_support"></a> [enable\_dns\_support](#output\_enable\_dns\_support) | Whether or not the VPC has DNS support. |
 | <a name="output_id"></a> [id](#output\_id) | The ID of the VPC. |

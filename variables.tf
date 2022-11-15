@@ -34,18 +34,6 @@ variable "eip_nat_tags" {
   EOT
 }
 
-variable "enable_classiclink" {
-  type        = bool
-  default     = false
-  description = "A boolean flag to enable/disable ClassicLink for the VPC."
-}
-
-variable "enable_classiclink_dns_support" {
-  type        = bool
-  default     = false
-  description = "A boolean flag to enable/disable ClassicLink DNS Support for the VPC."
-}
-
 variable "enable_dns_hostnames" {
   type        = bool
   default     = false

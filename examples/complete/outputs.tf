@@ -97,11 +97,6 @@ output "vpc_default_security_group_id" {
   value       = module.vpc.default_security_group_id
 }
 
-output "vpc_enable_classiclink" {
-  description = "Whether or not the VPC has Classiclink enabled."
-  value       = module.vpc.enable_classiclink
-}
-
 output "vpc_enable_dns_hostnames" {
   description = "Whether or not the VPC has DNS hostname support."
   value       = module.vpc.enable_dns_hostnames

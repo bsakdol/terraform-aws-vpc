@@ -100,11 +100,6 @@ output "default_security_group_id" {
   value       = try(aws_vpc.this[0].default_security_group_id)
 }
 
-output "enable_classiclink" {
-  description = "Whether or not the VPC has Classiclink enabled."
-  value       = try(aws_vpc.this[0].enable_dns_hostnames)
-}
-
 output "enable_dns_hostnames" {
   description = "Whether or not the VPC has DNS hostname support."
   value       = try(aws_vpc.this[0].enable_dns_hostnames)
