@@ -137,7 +137,8 @@ resource "aws_subnet" "internal" {
     {
       "Name" = "${var.name}-${lower(replace(each.value.availability_zone, "-", ""))}-internal"
     },
-    var.internal_subnets_tags
+    var.internal_subnets_tags,
+    try(each.value.tags, null)
   )
 }
 
@@ -154,7 +155,8 @@ resource "aws_subnet" "private" {
     {
       "Name" = "${var.name}-${lower(replace(each.value.availability_zone, "-", ""))}-private"
     },
-    var.private_subnets_tags
+    var.private_subnets_tags,
+    try(each.value.tags, null)
   )
 }
 
@@ -172,7 +174,8 @@ resource "aws_subnet" "public" {
     {
       "Name" = "${var.name}-${lower(replace(each.value.availability_zone, "-", ""))}-public"
     },
-    var.public_subnets_tags
+    var.public_subnets_tags,
+    try(each.value.tags, null)
   )
 }
 
